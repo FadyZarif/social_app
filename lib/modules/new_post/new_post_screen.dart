@@ -26,7 +26,7 @@ class NewPostScreen extends StatelessWidget {
               onPressed: () {
                 cubit.createNewPost(postText: postController.text);
               },
-              child: Text('Post'))
+              child: const Text('Post'))
         ]),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -34,8 +34,8 @@ class NewPostScreen extends StatelessWidget {
             child: Column(
               children: [
                 if (state is SocialCreatePostLoadingState)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10.0),
                   child: LinearProgressIndicator(),
                 ),
                   Row(
@@ -103,7 +103,7 @@ class NewPostScreen extends StatelessWidget {
                             onPressed: () {
                               cubit.deletePostImage();
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               IconBroken.Delete,
                               color: Colors.white,
                             )),
@@ -118,11 +118,11 @@ class NewPostScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(IconBroken.Image),
-                      SizedBox(
+                      const Icon(IconBroken.Image),
+                      const SizedBox(
                         width: 5,
                       ),
-                      Text('add photo'),
+                      const Text('add photo'),
                     ],
                   )),
             ],

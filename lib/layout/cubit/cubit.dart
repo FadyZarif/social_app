@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:social_app/layout/cubit/states.dart';
+import 'package:social_app/models/comment_model.dart';
 import 'package:social_app/models/post_model.dart';
 import 'package:social_app/models/user_model.dart';
 import 'package:social_app/modules/chats/chats_screen.dart';
@@ -29,6 +30,7 @@ class SocialCubit extends Cubit<SocialStates> {
     emit(SocialGetUserLoadingState());
     FirebaseFirestore.instance.collection('users').doc(uId).get().then((value) {
       userModel = UserModel.fromJson(value.data()!);
+      getPosts();
       emit(SocialGetUserSuccessState());
     }).catchError((error) {
       print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
@@ -107,10 +109,7 @@ class SocialCubit extends Cubit<SocialStates> {
     return await FirebaseStorage.instance
         .ref()
         .child(
-        'users/profile/${Uri
-            .file(profileImage!.path)
-            .pathSegments
-            .last}')
+            'users/profile/${Uri.file(profileImage!.path).pathSegments.last}')
         .putFile(profileImage!)
         .then((value) {
       value.ref.getDownloadURL().then((value) {
@@ -119,8 +118,8 @@ class SocialCubit extends Cubit<SocialStates> {
             .collection('users')
             .doc(userModel!.uId)
             .update({
-          'image': profileImgUrl ?? userModel?.image,
-        })
+              'image': profileImgUrl ?? userModel?.image,
+            })
             .then((value) {})
             .catchError((error) {});
         emit(SocialProfileImgUploadSuccessState());
@@ -142,10 +141,7 @@ class SocialCubit extends Cubit<SocialStates> {
     emit(SocialCoverImgUploadLoadingState());
     return await FirebaseStorage.instance
         .ref()
-        .child('users/cover/${Uri
-        .file(coverImage!.path)
-        .pathSegments
-        .last}')
+        .child('users/cover/${Uri.file(coverImage!.path).pathSegments.last}')
         .putFile(coverImage!)
         .then((value) {
       value.ref.getDownloadURL().then((value) {
@@ -154,8 +150,8 @@ class SocialCubit extends Cubit<SocialStates> {
             .collection('users')
             .doc(userModel!.uId)
             .update({
-          'cover': coverImgUrl ?? userModel?.cover,
-        })
+              'cover': coverImgUrl ?? userModel?.cover,
+            })
             .then((value) {})
             .catchError((error) {});
         emit(SocialCoverImgUploadSuccessState());
@@ -237,77 +233,139 @@ class SocialCubit extends Cubit<SocialStates> {
     }
   }
 
-
   void createNewPost({String? postText}) {
-
     emit(SocialCreatePostLoadingState());
 
-     if(postImage != null) {
-      FirebaseStorage.instance.ref()
-        .child('posts/${Uri
-        .file(postImage!.path)
-        .pathSegments
-        .last}')
-        .putFile(postImage!)
-        .then((value) {
-      value.ref.getDownloadURL().then((value) {
-        PostModel postModel = PostModel(
+    if (postImage != null) {
+      FirebaseStorage.instance
+          .ref()
+          .child('posts/${Uri.file(postImage!.path).pathSegments.last}')
+          .putFile(postImage!)
+          .then((value) {
+        value.ref.getDownloadURL().then((value) {
+          PostModel postModel = PostModel(
             image: userModel?.image,
             uId: userModel?.uId,
             name: userModel?.name,
             dateTime: DateTime.now().toString(),
             postImage: value,
-            postText: postText);
-        FirebaseFirestore.instance.collection('posts').add(postModel.toMap()).then((value) {
-          emit(SocialCreatePostSuccessState());
-        }).catchError((error){
-          print('xxxxxxxxxxxxxxxx');
-          emit(SocialCreatePostErrorState());
+            postText: postText,
+          );
+          FirebaseFirestore.instance
+              .collection('posts')
+              .add(postModel.toMap())
+              .then((value) {
+            emit(SocialCreatePostSuccessState());
+          }).catchError((error) {
+            print('xxxxxxxxxxxxxxxx');
+            emit(SocialCreatePostErrorState());
+          });
         });
       });
-    });
-    }
-    else{
+    } else {
       PostModel postModel = PostModel(
-          image: userModel?.image,
-          uId: userModel?.uId,
-          name: userModel?.name,
-          dateTime: DateTime.now().toString(),
-          postText: postText);
-      FirebaseFirestore.instance.collection('posts').add(postModel.toMap()).then((value) {
+        image: userModel?.image,
+        uId: userModel?.uId,
+        name: userModel?.name,
+        dateTime: DateTime.now().toString(),
+        postText: postText,
+      );
+      FirebaseFirestore.instance
+          .collection('posts')
+          .add(postModel.toMap())
+          .then((value) {
         emit(SocialCreatePostSuccessState());
-      }).catchError((error){
+      }).catchError((error) {
         print('xxxxxxxxxxxxxxxx');
         emit(SocialCreatePostErrorState());
       });
     }
-
   }
 
   List<PostModel> posts = [];
+  List<String> postsId = [];
+  List<bool> isLiked = [];
 
-  void getPosts(){
+  void getPosts() {
     emit(SocialGetPostLoadingState());
     FirebaseFirestore.instance.collection('posts').snapshots().listen((event) {
       posts = [];
+      postsId = [];
+      isLiked = [];
       event.docs.forEach((element) {
-         posts.add(PostModel.fromJson(element.data())) ;
-
+        posts.add(PostModel.fromJson(element.data()));
+        var x = posts.last.likes?.where((e) => e.toString() == userModel?.uId);
+        if (x?.isEmpty ?? true) {
+          isLiked.add(false);
+        } else {
+          isLiked.add(true);
+        }
+        postsId.add(element.id);
       });
-      posts.sort((a, b) => b.dateTime!.compareTo(a.dateTime!),);
+      /*print(isLiked);
+      print(posts[0].fav?[0].id);
+      posts[0].fav?[0]?.get().then((value) {
+        print(value.data());
+      });*/
+
       emit(SocialGetPostSuccessState());
     });
 
-    /*FirebaseFirestore.instance.collection('posts').get().then((value) {
-      value.docs.forEach((element) {
-        posts.add(PostModel.fromJson(element.data()));
-      });
-      emit(SocialGetPostSuccessState());
-    }).catchError((error){
-      print('xxxxxxxxxxxxxxxxxx');
-      print(error.toString());
-      emit(SocialGetPostErrorState());
-    });*/
-
   }
+
+  void likePost(String postId, int i) {
+    if (isLiked[i] == false) {
+      FirebaseFirestore.instance.collection('posts').doc(postId).update({
+        'likes': FieldValue.arrayUnion([
+          //FirebaseFirestore.instance.collection('users').doc(userModel?.uId)
+          userModel?.uId
+        ])
+      });
+    } else {
+      FirebaseFirestore.instance.collection('posts').doc(postId).update({
+        'likes': FieldValue.arrayRemove([
+          //FirebaseFirestore.instance.collection('users').doc(userModel?.uId)
+          userModel?.uId
+        ])
+      });
+    }
+  }
+
+  void writeComment(String postId, int i, String comment) {
+    emit(SocialWriteCommentLoadingState());
+    CommentModel? commentModel;
+    commentModel = CommentModel(
+        name: userModel?.name,
+        img: userModel?.image,
+        dateTime: DateTime.now().toString(),
+        comment: comment);
+    FirebaseFirestore.instance.collection('posts').doc(postId).update({
+      'comments': FieldValue.arrayUnion([commentModel.toMap()])
+    }).then((value) {
+      emit(SocialWriteCommentSuccessState());
+    }).catchError((error) {
+      print(error.toString());
+      emit(SocialWriteCommentErrorState());
+    });
+  }
+
+  List<UserModel> likersList = [];
+
+  void getLikers(int i){
+    emit(SocialGetPostLikersLoadingState());
+    posts[i].likes?.forEach((element) {
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(element)
+          .get().then((value) {
+            likersList.add(UserModel.fromJson(value.data()!));
+            emit(SocialGetPostLikersSuccessState());
+      }).catchError((error){
+      emit(SocialGetPostLikersErrirState());
+      });
+    });
+  }
+
+
+
 }

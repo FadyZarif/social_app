@@ -14,6 +14,16 @@ class SocialGetPostLoadingState extends SocialStates{}
 class SocialGetPostSuccessState extends SocialStates{}
 class SocialGetPostErrorState extends SocialStates{}
 
+class SocialGetPostLikersLoadingState extends SocialStates{}
+class SocialGetPostLikersSuccessState extends SocialStates{}
+class SocialGetPostLikersErrirState extends SocialStates{}
+
+class SocialLikePostSuccessState extends SocialStates{}
+class SocialLikePostErrorState extends SocialStates{}
+
+class SocialGetLikePostSuccessState extends SocialStates{}
+class SocialGetLikePostLoadingState extends SocialStates{}
+
 class SocialChangeBottomNavState extends SocialStates{}
 
 class SocialNewPostState extends SocialStates{}
@@ -48,3 +58,13 @@ class SocialUserUpdateErrorState extends SocialStates{}
 class SocialCreatePostLoadingState extends SocialStates{}
 class SocialCreatePostSuccessState extends SocialStates{}
 class SocialCreatePostErrorState extends SocialStates{}
+
+
+class SocialWriteCommentSuccessState extends SocialStates{}
+class SocialWriteCommentLoadingState extends SocialStates{}
+class SocialWriteCommentErrorState extends SocialStates{}
+
+
+
+
+

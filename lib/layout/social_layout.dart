@@ -25,14 +25,15 @@ class SocialLayout extends StatelessWidget {
         },
         builder: (context, state) {
           return ConditionalBuilder(
-            condition: cubit.userModel != null,
+            condition: cubit.userModel != null ,
             builder: (context) {
               return Scaffold(
                 appBar: AppBar(
                   title: Text(cubit.titlesList[cubit.currentIndex]),
                   actions: [
                     IconButton(
-                        onPressed: () {}, icon: Icon(IconBroken.Notification)),
+                        onPressed: () {
+                        }, icon: Icon(IconBroken.Notification)),
                     IconButton(onPressed: () {}, icon: Icon(IconBroken.Search)),
                     IconButton(onPressed: (){
                       FirebaseAuth.instance.signOut().then((value) {
