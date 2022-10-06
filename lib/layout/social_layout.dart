@@ -32,9 +32,8 @@ class SocialLayout extends StatelessWidget {
                   title: Text(cubit.titlesList[cubit.currentIndex]),
                   actions: [
                     IconButton(
-                        onPressed: () {
-                        }, icon: Icon(IconBroken.Notification)),
-                    IconButton(onPressed: () {}, icon: Icon(IconBroken.Search)),
+                        onPressed: () {cubit.getAllChats();}, icon: Icon(IconBroken.Notification)),
+                    IconButton(onPressed: () {print(cubit.allChats[0].name);}, icon: Icon(IconBroken.Search)),
                     IconButton(onPressed: (){
                       FirebaseAuth.instance.signOut().then((value) {
                         uId = null;

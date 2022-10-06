@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:social_app/layout/cubit/cubit.dart';
 import 'package:social_app/layout/social_layout.dart';
 import 'package:social_app/modules/login/cubit/cubit.dart';
 import 'package:social_app/modules/register/register_screen.dart';
@@ -60,7 +61,10 @@ class LoginScreen extends StatelessWidget {
               gravity: ToastGravity.BOTTOM,
               backgroundColor: Colors.green,
             );
+            SocialCubit.get(context).getUserData();
+            SocialCubit.get(context).getPosts();
             navigateToReplacement(context,  const SocialLayout());
+
           }
           if(state is LoginErrorState){
             defToast(

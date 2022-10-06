@@ -15,7 +15,7 @@ class LikesScreen extends StatelessWidget {
       listener: (context,state){},
       builder:(context,state) {
         SocialCubit cubit = SocialCubit.get(context);
-        cubit.getLikers(i);
+
         return ConditionalBuilder(
           condition: cubit.likersList.isNotEmpty,
           builder: (context)=> Scaffold(
@@ -34,28 +34,6 @@ class LikesScreen extends StatelessWidget {
                     cubit.posts[i].likes?.length.toString() ?? '0',
                     style: Theme.of(context).textTheme.caption,
                   ),
-                  Spacer(),
-                  InkWell(
-                    onTap: () {
-                      cubit.likePost(cubit.postsId[i], i);
-                    },
-                    child: Row(
-                      children: [
-                        Icon(
-                          IconBroken.Heart,
-                          color: cubit.isLiked[i] ? Colors.red : Colors.grey,
-                          size: 20,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          'Like',
-                          style: Theme.of(context).textTheme.caption,
-                        ),
-                      ],
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -65,39 +43,7 @@ class LikesScreen extends StatelessWidget {
                 itemCount:  cubit.posts[i].likes?.length??0,
                 separatorBuilder: (context,index)=>Divider(thickness: 0,color: Colors.transparent,),
                 itemBuilder:(context,index) {
-                return Row(
-                  children: [
-                    Stack(
-                      alignment: AlignmentDirectional.bottomEnd,
-                      children: [
-                        CircleAvatar(
-                          radius: 25,
-                          backgroundImage:
-                          NetworkImage(cubit.likersList[index].image!)
-                              //NetworkImage(cubit.likersa[i].image!),
-                        ),
-                        CircleAvatar(
-                            backgroundColor: Colors.red,
-                            radius: 10,
-                            child: Icon(
-                              IconBroken.Heart,
-                              color: Colors.white,
-                              size: 14,
-                            ))
-                      ],
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    Text(
-                      cubit.likersList[index].name!,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium
-                          ?.copyWith(fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                );
+                return buildLikerItem(cubit , index , context);
               }
               ),
             ),
@@ -105,6 +51,41 @@ class LikesScreen extends StatelessWidget {
           fallback: (context)=>Center(child: CircularProgressIndicator()),
         );
       },
+    );
+  }
+  Widget buildLikerItem(SocialCubit cubit , int index,BuildContext context){
+    return Row(
+      children: [
+        Stack(
+          alignment: AlignmentDirectional.bottomEnd,
+          children: [
+            CircleAvatar(
+                radius: 25,
+                backgroundImage:
+                NetworkImage(cubit.likersList[index].image!)
+              //NetworkImage(cubit.likersa[i].image!),
+            ),
+            CircleAvatar(
+                backgroundColor: Colors.red,
+                radius: 10,
+                child: Icon(
+                  IconBroken.Heart,
+                  color: Colors.white,
+                  size: 14,
+                ))
+          ],
+        ),
+        const SizedBox(
+          width: 15,
+        ),
+        Text(
+          cubit.likersList[index].name!,
+          style: Theme.of(context)
+              .textTheme
+              .bodyMedium
+              ?.copyWith(fontWeight: FontWeight.bold),
+        ),
+      ],
     );
   }
 }

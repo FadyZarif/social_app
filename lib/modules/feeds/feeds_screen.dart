@@ -29,7 +29,7 @@ class FeedsScreen extends StatelessWidget {
       return Scaffold(
         key: scaffoldKey,
         body: ConditionalBuilder(
-          condition: cubit.posts.isNotEmpty,
+          condition: cubit.posts.length > 0,
           builder: (context) => SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Column(
@@ -184,7 +184,10 @@ class FeedsScreen extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    navigateTo(context, LikesScreen(i: i,));
+                    cubit.getLikers(i).then((value) {
+                      navigateTo(context, LikesScreen(i: i,));
+                    });
+
                   },
                   child: Row(
                     children: [
@@ -197,7 +200,7 @@ class FeedsScreen extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        model.likes?.length.toString() ?? '0',
+                        '${model.likes?.length.toString()??0} likes',
                         style: Theme.of(context).textTheme.caption,
                       ),
                     ],
@@ -219,7 +222,7 @@ class FeedsScreen extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        model.comments?.length.toString() ?? '0',
+                        '${model.comments?.length.toString()??0} comments',
                         style: Theme.of(context).textTheme.caption,
                       ),
                     ],
