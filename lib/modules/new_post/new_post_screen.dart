@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/layout/cubit/cubit.dart';
@@ -82,6 +83,7 @@ class NewPostScreen extends StatelessWidget {
                 Stack(
                   alignment: AlignmentDirectional.topEnd,
                   children: [
+                    if(!kIsWeb)
                     Card(
                       clipBehavior: Clip.antiAlias,
                       elevation: 5,
@@ -92,6 +94,17 @@ class NewPostScreen extends StatelessWidget {
                         //height: 450,
                       ),
                     ),
+                    if(kIsWeb)
+                      Card(
+                        clipBehavior: Clip.antiAlias,
+                        elevation: 5,
+                        child: Image(
+                          image: NetworkImage(cubit.postImage!.path),
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          //height: 450,
+                        ),
+                      ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CircleAvatar(
