@@ -286,13 +286,58 @@ class SocialCubit extends Cubit<SocialStates> {
     }
   }
 
+  void editNewPost({required String postId,required PostModel model}) {
+    emit(SocialEditPostLoadingState());
+
+    if (postImage != null) {
+      FirebaseStorage.instance
+          .ref()
+          .child('posts/${Uri.file(postImage!.path).pathSegments.last}')
+          .putFile(postImage!)
+          .then((value) {
+        value.ref.getDownloadURL().then((value) {
+          model.postImage = value;
+          FirebaseFirestore.instance
+              .collection('posts')
+          .doc(postId)
+              .update(model.toMap())
+              .then((value) {
+            emit(SocialEditPostSuccessState());
+          }).catchError((error) {
+            print('xxxxxxxxxxxxxxxx');
+            emit(SocialEditPostErrorState());
+          });
+        });
+      });
+    } else {
+
+      FirebaseFirestore.instance
+
+          .collection('posts')
+      .doc(postId)
+          .update(model.toMap())
+          .then((value) {
+        emit(SocialEditPostSuccessState());
+      }).catchError((error) {
+        print('xxxxxxxxxxxxxxxx');
+        emit(SocialEditPostErrorState());
+      });
+    }
+  }
+
+  void removePostImage(){
+
+    emit(SocialPostImgRemoveSuccessState());
+
+  }
+
   List<PostModel> posts = [];
   List<String> postsId = [];
   List<bool> isLiked = [];
 
   void getPosts() {
     emit(SocialGetPostLoadingState());
-    FirebaseFirestore.instance.collection('posts').snapshots().listen((event) {
+    FirebaseFirestore.instance.collection('posts').orderBy('dateTime',descending: true).snapshots().listen((event) {
       posts = [];
       postsId = [];
       isLiked = [];
@@ -371,6 +416,8 @@ class SocialCubit extends Cubit<SocialStates> {
     });
   }
 
+
+
   List<UserModel> allUsers = [];
 
   void getAllUsers() {
@@ -421,7 +468,7 @@ class SocialCubit extends Cubit<SocialStates> {
         .doc(userModel?.uId)
         .collection('chats')
         .doc(receiverModel.uId)
-        .set({'exist' : true}).then((value) {
+        .set({'exist': true}).then((value) {
       FirebaseFirestore.instance
           .collection('users')
           .doc(userModel?.uId)
@@ -435,10 +482,7 @@ class SocialCubit extends Cubit<SocialStates> {
         print(error.toString());
         emit(SocialSendMessageSuccessState());
       });
-
     });
-
-
 
     FirebaseFirestore.instance
         .collection('users')
@@ -460,7 +504,6 @@ class SocialCubit extends Cubit<SocialStates> {
         emit(SocialSendMessageSuccessState());
       });
     });
-
   }
 
   List<MessageModel> messages = [];
@@ -482,12 +525,8 @@ class SocialCubit extends Cubit<SocialStates> {
       emit(SocialGetAllMessagesSuccessState());
     });
   }
+
+  void deletePost(int i){
+    FirebaseFirestore.instance.collection('posts').doc(postsId[i]).delete();
+  }
 }
-
-
-
-
-
-
-
-

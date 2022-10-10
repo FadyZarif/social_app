@@ -11,6 +11,7 @@ class NewPostScreen extends StatelessWidget {
   NewPostScreen({Key? key}) : super(key: key);
 
   TextEditingController postController = TextEditingController();
+  GlobalKey<FormState> formKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,9 @@ class NewPostScreen extends StatelessWidget {
         appBar: defAppBar(context: context, title: 'Create Post', actions: [
           TextButton(
               onPressed: () {
-                cubit.createNewPost(postText: postController.text);
+                if(formKey.currentState!.validate()) {
+                  cubit.createNewPost(postText: postController.text);
+                }
               },
               child: const Text('Post'))
         ]),
@@ -60,13 +63,24 @@ class NewPostScreen extends StatelessWidget {
                   ),
                 Container(
                   height: 160,
-                  child: TextFormField(
-                    controller: postController,
-                    maxLines: 7,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText:
-                          'what is on your mind, ${cubit.userModel?.name} ?',
+                  child: Form(
+                    key: formKey,
+                    child: TextFormField(
+                      controller: postController,
+                      maxLines: 7,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText:
+                            'what is on your mind, ${cubit.userModel?.name} ?',
+                      ),
+                      validator: (v){
+                        if(v!.isEmpty){
+                          return 'write post';
+                        }
+                        else {
+                          return null;
+                        }
+                      }
                     ),
                   ),
                 ),

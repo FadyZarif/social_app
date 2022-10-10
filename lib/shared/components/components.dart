@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:social_app/layout/cubit/cubit.dart';
 import 'package:social_app/styles/icon_broken.dart';
 import 'package:social_app/styles/themes.dart';
 
@@ -69,12 +70,16 @@ Widget defButton(
 PreferredSizeWidget defAppBar({
   required BuildContext context,
   String? title,
-  List<Widget>? actions
+  List<Widget>? actions,
+  bool isEditPost = false
 }){
   return AppBar(
 
     leading: IconButton(
       onPressed: (){
+        if(isEditPost){
+          SocialCubit.get(context).getPosts();
+        }
         Navigator.pop(context);
       },
       icon: Icon(IconBroken.Arrow___Left_2),

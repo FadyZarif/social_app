@@ -7,6 +7,7 @@ import 'package:social_app/layout/cubit/cubit.dart';
 import 'package:social_app/layout/cubit/states.dart';
 import 'package:social_app/models/post_model.dart';
 import 'package:social_app/modules/comments/comments_screen.dart';
+import 'package:social_app/modules/edit_post/edit_post_screen.dart';
 import 'package:social_app/modules/likes/likes_screen.dart';
 import 'package:social_app/shared/components/constant.dart';
 import 'package:social_app/styles/icon_broken.dart';
@@ -138,8 +139,8 @@ class FeedsScreen extends StatelessWidget {
                   ],
                 ),
                 const Spacer(),
-                IconButton(
-                    onPressed: () {}, icon: const Icon(IconBroken.More_Circle))
+                if(cubit.userModel?.uId == model.uId)
+                  moreOption(i, cubit,context,model)
               ],
             ),
             const Divider(
@@ -311,6 +312,52 @@ class FeedsScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+  Widget moreOption(int i,SocialCubit cubit, BuildContext context,PostModel model){
+    return PopupMenuButton<int>(
+      icon: Icon(IconBroken.More_Circle),
+      itemBuilder: (context) => [
+        PopupMenuItem(
+          value: 1,
+          child: Row(
+            children: const [
+              Icon(IconBroken.Edit_Square),
+              SizedBox(
+                width: 10,
+              ),
+              Text("Edit Post")
+            ],
+          ),
+        ),
+        // popupmenu item 2
+        PopupMenuItem(
+          value: 2,
+          // row has two child icon and text
+          child: Row(
+            children: const[
+              Icon(IconBroken.Delete),
+              SizedBox(
+                // sized box with width 10
+                width: 10,
+              ),
+              Text("Delete Post")
+            ],
+          ),
+        ),
+      ],
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      offset: Offset(0, 40),
+      color: Colors.white,
+      elevation: 4,
+      onSelected: (v){
+        if(v==1){
+          navigateTo(context, EditPostScreen(postId: cubit.postsId[i],model: model,));
+        }
+        if(v==2){
+          cubit.deletePost(i);
+        }
+      },
     );
   }
 }
