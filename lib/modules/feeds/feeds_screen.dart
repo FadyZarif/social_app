@@ -210,7 +210,10 @@ class FeedsScreen extends StatelessWidget {
                 const Spacer(),
                 InkWell(
                   onTap: () {
-                    navigateTo(context, CommentsScreen(i: i));
+                    cubit.getCommenters(i).then((value) {
+                      navigateTo(context, CommentsScreen(i: i));
+                    });
+
                   },
                   child: Row(
                     children: [

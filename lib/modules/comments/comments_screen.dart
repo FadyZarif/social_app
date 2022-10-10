@@ -35,20 +35,14 @@ class CommentsScreen extends StatelessWidget {
               ),
             ),
             body: ConditionalBuilder(
-              condition: cubit.posts[i].comments != null,
+              condition: cubit.commentersList.isNotEmpty,
               builder: (context)
               {
                return Padding(
                  padding: const EdgeInsets.all(20.0),
                  child: ListView.separated(
                     itemBuilder: (context, index) {
-                      return ConditionalBuilder(
-                        condition: cubit.posts[i].comments![0]['img'] != null,
-                        builder: (context) =>
-                            buildCommentItem(cubit, index, context),
-                        fallback: (context) =>
-                            Center(child: CircularProgressIndicator()),
-                      );
+                      return buildCommentItem(cubit, index, context);
                     },
                     separatorBuilder: (context, index) =>
                         Divider(color: Colors.transparent,height: 20,),
@@ -66,7 +60,7 @@ class CommentsScreen extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 25,
-          backgroundImage: NetworkImage(cubit.posts[i].comments![index]['img']),
+          backgroundImage: NetworkImage(cubit.commentersList[index].image!),
         ),
         const SizedBox(width: 5,),
         Expanded(
@@ -83,7 +77,7 @@ class CommentsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(cubit.posts[i].comments![index]['name'],style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),),
+                  Text(cubit.commentersList[index].name!,style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),),
                   SizedBox(
                     height: 5,
                   ),

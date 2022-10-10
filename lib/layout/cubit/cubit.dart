@@ -383,8 +383,7 @@ class SocialCubit extends Cubit<SocialStates> {
     emit(SocialWriteCommentLoadingState());
     CommentModel? commentModel;
     commentModel = CommentModel(
-        name: userModel?.name,
-        img: userModel?.image,
+        uId: userModel?.uId,
         dateTime: DateTime.now().toString(),
         comment: comment);
     FirebaseFirestore.instance.collection('posts').doc(postId).update({
@@ -412,6 +411,25 @@ class SocialCubit extends Cubit<SocialStates> {
         emit(SocialGetPostLikersSuccessState());
       }).catchError((error) {
         emit(SocialGetPostLikersErrirState());
+      });
+    });
+  }
+
+  List<UserModel> commentersList = [];
+
+  Future<void> getCommenters(int i) async {
+    emit(SocialGetPostCommentersLoadingState());
+    commentersList = [];
+    posts[i].comments?.forEach((element) async {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(element['uId'])
+          .get()
+          .then((value) {
+        commentersList.add(UserModel.fromJson(value.data()!));
+        emit(SocialGetPostCommentersSuccessState());
+      }).catchError((error) {
+        emit(SocialGetPostCommentersErrirState());
       });
     });
   }

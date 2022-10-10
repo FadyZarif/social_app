@@ -29,6 +29,10 @@ class SocialGetPostLikersLoadingState extends SocialStates{}
 class SocialGetPostLikersSuccessState extends SocialStates{}
 class SocialGetPostLikersErrirState extends SocialStates{}
 
+class SocialGetPostCommentersLoadingState extends SocialStates{}
+class SocialGetPostCommentersSuccessState extends SocialStates{}
+class SocialGetPostCommentersErrirState extends SocialStates{}
+
 
 
 class SocialLikePostSuccessState extends SocialStates{}
