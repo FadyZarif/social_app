@@ -8,6 +8,7 @@ class UserModel {
   String? cover;
   String? bio;
   bool? isEmailVerified;
+  List<String?>? photos=[];
 
   UserModel({
     this.name,
@@ -19,6 +20,7 @@ class UserModel {
     this.cover,
     this.bio,
     this.isEmailVerified,
+    this.photos,
   });
 
   UserModel.fromJson(Map<String, dynamic> json) {
@@ -31,6 +33,9 @@ class UserModel {
     cover = json['cover'];
     bio = json['bio'];
     isEmailVerified = json['isEmailVerified'];
+    json['photos'].forEach((e){
+      photos?.add(e);
+    });
   }
 
   Map<String, dynamic> toMap() {
@@ -44,6 +49,7 @@ class UserModel {
       'cover': cover,
       'bio': bio,
       'isEmailVerified': isEmailVerified,
+      'photos': photos,
     };
   }
 }

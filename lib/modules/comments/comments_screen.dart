@@ -45,12 +45,12 @@ class CommentsScreen extends StatelessWidget {
                       return buildCommentItem(cubit, index, context);
                     },
                     separatorBuilder: (context, index) =>
-                        Divider(color: Colors.transparent,height: 20,),
+                        const Divider(color: Colors.transparent,height: 20,),
                     itemCount: cubit.posts[i].comments?.length ?? 0
               ),
                );
               },
-              fallback: (context)=> Center(child: CircularProgressIndicator()),
+              fallback: (context)=> const Center(child: CircularProgressIndicator()),
             )
           );
         });
@@ -58,27 +58,34 @@ class CommentsScreen extends StatelessWidget {
   Widget buildCommentItem(SocialCubit cubit,int index,BuildContext context){
     return Row(
       children: [
-        CircleAvatar(
-          radius: 25,
-          backgroundImage: NetworkImage(cubit.commentersList[index].image!),
+        ConditionalBuilder(
+          condition: cubit.commentersList[index].image != null,
+          builder:(context)=> CircleAvatar(
+            radius: 25,
+            backgroundImage: NetworkImage(cubit.commentersList[index].image!),
+          ),
+          fallback: (context)=> const CircleAvatar(
+            radius: 25,
+            child: CircularProgressIndicator(),
+          ),
         ),
         const SizedBox(width: 5,),
         Expanded(
           child: Container(
             decoration:  BoxDecoration(
               color: Colors.lightBlueAccent.withOpacity(0.3),
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(10),
                 bottomRight: Radius.circular(10),
                 bottomLeft: Radius.circular(10),
               ),
             ),
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(cubit.commentersList[index].name!,style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Text(

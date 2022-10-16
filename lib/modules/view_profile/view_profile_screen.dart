@@ -3,23 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/layout/cubit/cubit.dart';
 import 'package:social_app/layout/cubit/states.dart';
 import 'package:social_app/models/user_model.dart';
-import 'package:social_app/modules/edit_profile/edit_profile_screen.dart';
-import 'package:social_app/shared/components/constant.dart';
-import 'package:social_app/styles/icon_broken.dart';
 
-class SettingsScreen extends StatelessWidget {
-   SettingsScreen({Key? key}) : super(key: key);
-
-
-
+class ViewProfileScreen extends StatelessWidget {
+  const ViewProfileScreen({Key? key, required this.model}) : super(key: key);
+  final UserModel model;
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SocialCubit, SocialStates>(
         listener: (context, state) {},
         builder: (context, state) {
           SocialCubit cubit = SocialCubit.get(context);
-          UserModel model = cubit.userModel!;
           return Scaffold(
+            appBar: AppBar(),
             body: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -56,7 +51,7 @@ class SettingsScreen extends StatelessWidget {
                           CircleAvatar(
                             radius: 64,
                             backgroundColor:
-                                Theme.of(context).scaffoldBackgroundColor,
+                            Theme.of(context).scaffoldBackgroundColor,
                             child: CircleAvatar(
                               radius: 60,
                               backgroundImage: NetworkImage('${model.image}'),
@@ -162,37 +157,18 @@ class SettingsScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: OutlinedButton(
-                              onPressed: () {
-                                cubit.addPhotos();
-                              }, child: const Text('Add Photos')),
-                        ),
-                        const SizedBox(width: 10),
-                        OutlinedButton(
-                            onPressed: () {
-                              navigateTo(context, EditProfileScreen());
-                            },
-                            child: const Icon(
-                              IconBroken.Edit,
-                              size: 18,
-                            )),
-                      ],
-                    ),
                     SizedBox(
                       height: 15,
                     ),
                     GridView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: model.photos!.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 3,
-                          mainAxisSpacing: 3),
-                      itemBuilder: (context,i)=> model.photos?[i] != null ? buildPhotosItem(model.photos![i]!) : Container()
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: model.photos!.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 3,
+                            mainAxisSpacing: 3),
+                        itemBuilder: (context,i)=>  model.photos?[i] != null ? buildPhotosItem(model.photos![i]!) : Container()
                     )
                   ],
                 ),

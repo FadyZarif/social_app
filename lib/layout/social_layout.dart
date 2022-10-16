@@ -7,8 +7,10 @@ import 'package:social_app/layout/cubit/states.dart';
 import 'package:social_app/modules/login/cubit/states.dart';
 import 'package:social_app/modules/login/login_screen.dart';
 import 'package:social_app/modules/new_post/new_post_screen.dart';
+import 'package:social_app/modules/search/search_screen.dart';
 import 'package:social_app/shared/components/constant.dart';
 import 'package:social_app/styles/icon_broken.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class SocialLayout extends StatelessWidget {
   const SocialLayout({Key? key}) : super(key: key);
@@ -24,6 +26,7 @@ class SocialLayout extends StatelessWidget {
           }
         },
         builder: (context, state) {
+          SocialCubit cubit = SocialCubit.get(context);
           return ConditionalBuilder(
             condition: cubit.userModel != null ,
             builder: (context) {
@@ -32,8 +35,16 @@ class SocialLayout extends StatelessWidget {
                   title: Text(cubit.titlesList[cubit.currentIndex]),
                   actions: [
                     IconButton(
-                        onPressed: () {cubit.getAllChats();}, icon: Icon(IconBroken.Notification)),
-                    IconButton(onPressed: () {print(cubit.allChats[0].name);}, icon: Icon(IconBroken.Search)),
+                        onPressed: () {
+                          cubit.getStories();
+                         /* print(DateTime.now().add(Duration(days: 1)));
+                          print(DateTime.now());
+
+                          timeago.setLocaleMessages('ar', timeago.ArMessages());
+                          timeago.setLocaleMessages('ar_short', timeago.ArShortMessages());
+                          print(timeago.format(DateTime.parse("2022-10-12 23:00:08.698220"),locale: 'ar'));*/
+                        }, icon: Icon(IconBroken.Notification)),
+                    IconButton(onPressed: () {navigateTo(context, SearchScreen( cubit: cubit,));}, icon: Icon(IconBroken.Search)),
                     IconButton(onPressed: (){
                       FirebaseAuth.instance.signOut().then((value) {
                         uId = null;

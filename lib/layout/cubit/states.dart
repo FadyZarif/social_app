@@ -14,6 +14,10 @@ class SocialGetAllUserLoadingState extends SocialStates{}
 class SocialGetAllUserSuccessState extends SocialStates{}
 class SocialGetAllUserErrorState extends SocialStates{}
 
+class SocialGetStoriesLoadingState extends SocialStates{}
+class SocialGetStoriesSuccessState extends SocialStates{}
+class SocialGetStoriesErrorState extends SocialStates{}
+
 class SocialGetAllChatsLoadingState extends SocialStates{}
 class SocialGetAllChatsSuccessState extends SocialStates{}
 class SocialGetAllChatsErrorState extends SocialStates{}
@@ -91,6 +95,15 @@ class SocialSendMessageErrorState extends SocialStates{}
 
 class SocialGetMessagesSuccessState extends SocialStates{}
 class SocialGetMessageErrorState extends SocialStates{}
+
+class SocialAddPhotosLoadingState extends SocialStates{}
+class SocialAddPhotosSuccessState extends SocialStates{}
+class SocialAddPhotosErrorState extends SocialStates{}
+
+class SocialGetPublisherLoadingState extends SocialStates{}
+class SocialGetPublisherSuccessState extends SocialStates{}
+class SocialGetPublisherErrorState extends SocialStates{}
+
 
 
 

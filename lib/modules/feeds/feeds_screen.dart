@@ -6,9 +6,12 @@ import 'package:intl/intl.dart';
 import 'package:social_app/layout/cubit/cubit.dart';
 import 'package:social_app/layout/cubit/states.dart';
 import 'package:social_app/models/post_model.dart';
+import 'package:social_app/models/user_model.dart';
 import 'package:social_app/modules/comments/comments_screen.dart';
 import 'package:social_app/modules/edit_post/edit_post_screen.dart';
 import 'package:social_app/modules/likes/likes_screen.dart';
+import 'package:social_app/modules/new_story/new_story_screen.dart';
+import 'package:social_app/modules/view_story/view_story.dart';
 import 'package:social_app/shared/components/constant.dart';
 import 'package:social_app/styles/icon_broken.dart';
 import 'package:social_app/styles/themes.dart';
@@ -34,32 +37,100 @@ class FeedsScreen extends StatelessWidget {
           builder: (context) => SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Card(
-                  clipBehavior: Clip.antiAlias,
-                  margin: const EdgeInsets.all(8),
-                  elevation: 5,
-                  child: Stack(
-                    alignment: AlignmentDirectional.bottomEnd,
-                    children: [
-                      const Image(
-                        image: NetworkImage(
-                            'https://img.freepik.com/free-photo/horizontal-shot-smiling-curly-haired-woman-indicates-free-space-demonstrates-place-your-advertisement-attracts-attention-sale-wears-green-turtleneck-isolated-vibrant-pink-wall_273609-42770.jpg?w=740&t=st=1664659256~exp=1664659856~hmac=186f74c0db8dbbd1afd68e85d470121f4189e3103becb116c418a10ac8cef96f'),
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                        height: 220,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text(
-                          'Communicate with friends',
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle2
-                              ?.copyWith(color: Colors.white),
+                // Card(
+                //   clipBehavior: Clip.antiAlias,
+                //   margin: const EdgeInsets.all(8),
+                //   elevation: 5,
+                //   child: Stack(
+                //     alignment: AlignmentDirectional.bottomEnd,
+                //     children: [
+                //       const Image(
+                //         image: NetworkImage(
+                //             'https://img.freepik.com/free-photo/horizontal-shot-smiling-curly-haired-woman-indicates-free-space-demonstrates-place-your-advertisement-attracts-attention-sale-wears-green-turtleneck-isolated-vibrant-pink-wall_273609-42770.jpg?w=740&t=st=1664659256~exp=1664659856~hmac=186f74c0db8dbbd1afd68e85d470121f4189e3103becb116c418a10ac8cef96f'),
+                //         fit: BoxFit.cover,
+                //         width: double.infinity,
+                //         height: 220,
+                //       ),
+                //       Padding(
+                //         padding: const EdgeInsets.all(10.0),
+                //         child: Text(
+                //           'Communicate with friends',
+                //           style: Theme.of(context)
+                //               .textTheme
+                //               .subtitle2
+                //               ?.copyWith(color: Colors.white),
+                //         ),
+                //       )
+                //     ],
+                //   ),
+                // ),
+                Container(
+                  height: 120,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    physics: BouncingScrollPhysics(),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                      InkWell(
+                        onTap: (){
+                          cubit.getStoryImage(context);
+                        },
+                        child: Container(
+                        width: 90,
+                        child: Column(
+                          children: [
+                            Stack(
+                              alignment: AlignmentDirectional.bottomEnd,
+                              children:  [
+                                CircleAvatar(
+                                  radius: 40.5,
+                                  backgroundColor: Colors.white,
+                                  child: CircleAvatar(
+                                    radius: 35,
+                                    backgroundImage: NetworkImage(
+                                        cubit.userModel!.image!),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.only(bottom: 3,end: 3),
+                                  child: CircleAvatar(
+                                    radius: 12,
+                                    backgroundColor: Colors.white,
+                                    child: CircleAvatar(
+                                      radius: 10,
+                                      backgroundColor: Colors.lightBlueAccent,
+                                      child: Icon(IconBroken.Plus,color: Colors.white,size: 14,),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              cubit.userModel!.name!,
+                              overflow: TextOverflow.ellipsis,
+                            )
+                          ],
                         ),
-                      )
-                    ],
+                    ),
+                      ),
+                        if(cubit.stories != null)
+                        ListView.separated(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, i) => buildStoryItem(cubit.stories[i],context,i),
+                          separatorBuilder: (context, i) => const SizedBox(
+                            width: 5,
+                          ),
+                          itemCount: cubit.stories.length,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 ListView.separated(
@@ -99,9 +170,14 @@ class FeedsScreen extends StatelessWidget {
           children: [
             Row(
               children: [
-                CircleAvatar(
-                  radius: 25,
-                  backgroundImage: NetworkImage(model.image!),
+                InkWell(
+                  onTap: () {
+                    cubit.getProfileData(model.uId!, context);
+                  },
+                  child: CircleAvatar(
+                    radius: 25,
+                    backgroundImage: NetworkImage(model.image!),
+                  ),
                 ),
                 const SizedBox(
                   width: 15,
@@ -112,12 +188,17 @@ class FeedsScreen extends StatelessWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          model.name!,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium
-                              ?.copyWith(fontWeight: FontWeight.bold),
+                        InkWell(
+                          onTap: () {
+                            cubit.getProfileData(model.uId!, context);
+                          },
+                          child: Text(
+                            model.name!,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(fontWeight: FontWeight.bold),
+                          ),
                         ),
                         const SizedBox(
                           width: 5,
@@ -139,8 +220,8 @@ class FeedsScreen extends StatelessWidget {
                   ],
                 ),
                 const Spacer(),
-                if(cubit.userModel?.uId == model.uId)
-                  moreOption(i, cubit,context,model)
+                if (cubit.userModel?.uId == model.uId)
+                  moreOption(i, cubit, context, model)
               ],
             ),
             const Divider(
@@ -186,9 +267,12 @@ class FeedsScreen extends StatelessWidget {
                 InkWell(
                   onTap: () {
                     cubit.getLikers(i).then((value) {
-                      navigateTo(context, LikesScreen(i: i,));
+                      navigateTo(
+                          context,
+                          LikesScreen(
+                            i: i,
+                          ));
                     });
-
                   },
                   child: Row(
                     children: [
@@ -201,7 +285,7 @@ class FeedsScreen extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        '${model.likes?.length.toString()??0} likes',
+                        '${model.likes?.length.toString() ?? 0} likes',
                         style: Theme.of(context).textTheme.caption,
                       ),
                     ],
@@ -213,7 +297,6 @@ class FeedsScreen extends StatelessWidget {
                     cubit.getCommenters(i).then((value) {
                       navigateTo(context, CommentsScreen(i: i));
                     });
-
                   },
                   child: Row(
                     children: [
@@ -226,7 +309,7 @@ class FeedsScreen extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        '${model.comments?.length.toString()??0} comments',
+                        '${model.comments?.length.toString() ?? 0} comments',
                         style: Theme.of(context).textTheme.caption,
                       ),
                     ],
@@ -272,9 +355,9 @@ class FeedsScreen extends StatelessWidget {
                     ),
                     IconButton(
                         onPressed: () {
-                          if(formState.currentState!.validate()) {
+                          if (formState.currentState!.validate()) {
                             cubit.writeComment(
-                              cubit.postsId[i], i, commentController.text);
+                                cubit.postsId[i], i, commentController.text);
                           }
                         },
                         icon: Icon(
@@ -300,10 +383,12 @@ class FeedsScreen extends StatelessWidget {
                           ),
                           Text(
                             'Like',
-                            style: Theme.of(context).textTheme.caption?.copyWith(
-                                  color:
-                                      cubit.isLiked[i] ? Colors.red : Colors.grey,
-                                ),
+                            style:
+                                Theme.of(context).textTheme.caption?.copyWith(
+                                      color: cubit.isLiked[i]
+                                          ? Colors.red
+                                          : Colors.grey,
+                                    ),
                           ),
                         ],
                       ),
@@ -317,7 +402,9 @@ class FeedsScreen extends StatelessWidget {
       ),
     );
   }
-  Widget moreOption(int i,SocialCubit cubit, BuildContext context,PostModel model){
+
+  Widget moreOption(
+      int i, SocialCubit cubit, BuildContext context, PostModel model) {
     return PopupMenuButton<int>(
       icon: Icon(IconBroken.More_Circle),
       itemBuilder: (context) => [
@@ -338,7 +425,7 @@ class FeedsScreen extends StatelessWidget {
           value: 2,
           // row has two child icon and text
           child: Row(
-            children: const[
+            children: const [
               Icon(IconBroken.Delete),
               SizedBox(
                 // sized box with width 10
@@ -353,14 +440,55 @@ class FeedsScreen extends StatelessWidget {
       offset: Offset(0, 40),
       color: Colors.white,
       elevation: 4,
-      onSelected: (v){
-        if(v==1){
-          navigateTo(context, EditPostScreen(postId: cubit.postsId[i],model: model,));
+      onSelected: (v) {
+        if (v == 1) {
+          navigateTo(
+              context,
+              EditPostScreen(
+                postId: cubit.postsId[i],
+                model: model,
+              ));
         }
-        if(v==2){
+        if (v == 2) {
           cubit.deletePost(i);
         }
       },
+    );
+  }
+
+  Widget buildStoryItem(Map story,BuildContext context, int index) {
+    UserModel userModel = story['user'];
+    return GestureDetector(
+      onTap: (){
+          navigateTo(context, ViewStory(story: story,index:index));
+      },
+      child: Container(
+        width: 90,
+        child: Column(
+          children:  [
+            CircleAvatar(
+              radius: 40.5,
+              backgroundColor: Colors.lightBlueAccent,
+              child: CircleAvatar(
+                radius: 38,
+                backgroundColor: Colors.white,
+                child: CircleAvatar(
+                  radius: 35,
+                  backgroundImage: NetworkImage(
+                      userModel.image!),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Text(
+              userModel.name!,
+              overflow: TextOverflow.ellipsis,
+            )
+          ],
+        ),
+      ),
     );
   }
 }

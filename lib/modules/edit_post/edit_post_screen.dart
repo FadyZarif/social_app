@@ -32,7 +32,7 @@ class EditPostScreen extends StatelessWidget {
           TextButton(
               onPressed: () {
                 if(formKey.currentState!.validate()) {
-                  cubit.editNewPost(model: model,postId: postId);
+                  cubit.editNewPost(model: model,postId: postId,postText: postController.text);
                 }
               },
               child: const Text('Edit'))

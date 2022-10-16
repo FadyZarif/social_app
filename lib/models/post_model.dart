@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:social_app/models/user_model.dart';
 
 class PostModel {
   String? name;

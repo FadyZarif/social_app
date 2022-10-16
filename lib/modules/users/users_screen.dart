@@ -32,7 +32,9 @@ class UsersScreen extends StatelessWidget {
   }
   Widget buildChatItem(SocialCubit cubit , int index,BuildContext context){
     return InkWell(
-      onTap: (){},
+      onTap: (){
+        cubit.getProfileData(cubit.allUsers[index].uId!, context);
+      },
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Row(

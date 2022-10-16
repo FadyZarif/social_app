@@ -52,6 +52,7 @@ class RegisterCubit extends Cubit<RegisterStates> {
       cover: 'https://media.istockphoto.com/photos/delicious-meal-on-a-black-plate-top-view-copy-space-picture-id1165399909?k=20&m=1165399909&s=612x612&w=0&h=5g5C4BDoxaejlIr4r_8cV6jDYXzN8n1-JkIW3LgPUuA=',
       bio: 'write your bio ...',
       isEmailVerified: false,
+      photos: []
     );
 
     FirebaseFirestore.instance

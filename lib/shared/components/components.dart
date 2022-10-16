@@ -20,12 +20,14 @@ Widget defTextFormFiled(
       String? hintText,
       Function(String)? onSubmitted,
       Function(String)? onChanged,
+      EdgeInsets? contentPadding
     }) {
   return TextFormField(
     autofocus: autofocus,
     style: TextStyle(fontWeight: FontWeight.bold),
     controller: textEditingController,
     decoration: InputDecoration(
+      contentPadding: contentPadding,
       hintText: hintText,
       border: OutlineInputBorder(),
       prefixIcon: prefixIcon,
