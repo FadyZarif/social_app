@@ -3,6 +3,7 @@ class MessageModel {
   String? receiverId;
   String? message;
   String? dateTime;
+  bool? isSeen;
 
 
   MessageModel({
@@ -10,6 +11,7 @@ class MessageModel {
     this.receiverId,
     this.message,
     this.dateTime,
+    this.isSeen,
   });
 
   MessageModel.fromJson(Map<String, dynamic> json) {
@@ -17,6 +19,7 @@ class MessageModel {
     receiverId = json['receiverId'];
     message = json['message'];
     dateTime = json['dateTime'];
+    isSeen = json['isSeen'];
     }
 
   Map<String, dynamic> toMap() {
@@ -25,6 +28,7 @@ class MessageModel {
       'receiverId': receiverId,
       'dateTime': dateTime,
       'message': message,
+      'isSeen': isSeen,
     };
   }
 }

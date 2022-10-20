@@ -39,10 +39,24 @@ class UsersScreen extends StatelessWidget {
         padding: const EdgeInsets.all(20.0),
         child: Row(
           children: [
-            CircleAvatar(
-                radius: 25,
-                backgroundImage:
-                NetworkImage(cubit.allUsers[index].image!)
+            Stack(
+              alignment: AlignmentDirectional.bottomEnd,
+              children: [
+                CircleAvatar(
+                    radius: 25,
+                    backgroundImage:
+                    NetworkImage(cubit.allUsers[index].image!)
+                ),
+                if(cubit.allUsers[index].isOnline!)
+                  const CircleAvatar(
+                    radius: 8,
+                    backgroundColor: Colors.white,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.green,
+                      radius: 6,
+                    ),
+                  ),
+              ],
             ),
             const SizedBox(
               width: 15,

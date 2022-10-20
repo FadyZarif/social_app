@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,8 +18,9 @@ class LoginCubit extends Cubit<LoginStates>{
     emit(LoginLoadingState());
     FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password).then((value) {
       uId = value.user!.uid;
-      print(uId);
-      emit(LoginSuccessState());
+      FirebaseFirestore.instance.collection('users').doc(value.user!.uid).update({"token":token}).then((value) {
+        emit(LoginSuccessState());
+      });
     }).catchError((error){
       print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
       print(error.toString());

@@ -7,7 +7,8 @@ class UserModel {
   String? image;
   String? cover;
   String? bio;
-  bool? isEmailVerified;
+  String? token;
+  bool? isOnline;
   List<String?>? photos=[];
 
   UserModel({
@@ -19,7 +20,8 @@ class UserModel {
     this.image,
     this.cover,
     this.bio,
-    this.isEmailVerified,
+    this.token,
+    this.isOnline,
     this.photos,
   });
 
@@ -32,7 +34,8 @@ class UserModel {
     image = json['image'];
     cover = json['cover'];
     bio = json['bio'];
-    isEmailVerified = json['isEmailVerified'];
+    token = json['token'];
+    isOnline = json['isOnline'];
     json['photos'].forEach((e){
       photos?.add(e);
     });
@@ -48,7 +51,8 @@ class UserModel {
       'image': image,
       'cover': cover,
       'bio': bio,
-      'isEmailVerified': isEmailVerified,
+      'token': token,
+      'isOnline': isOnline,
       'photos': photos,
     };
   }

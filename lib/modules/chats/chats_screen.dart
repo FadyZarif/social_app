@@ -5,6 +5,7 @@ import 'package:social_app/layout/cubit/cubit.dart';
 import 'package:social_app/layout/cubit/states.dart';
 import 'package:social_app/modules/chat_details/chat_details_screen.dart';
 import 'package:social_app/shared/components/constant.dart';
+import 'package:social_app/styles/icon_broken.dart';
 
 class ChatsScreen extends StatelessWidget {
   const ChatsScreen({Key? key}) : super(key: key);
@@ -17,7 +18,7 @@ class ChatsScreen extends StatelessWidget {
           SocialCubit cubit = SocialCubit.get(context);
           return Scaffold(
               body: ConditionalBuilder(
-                  condition: cubit.allChats.length > 0,
+                  condition: cubit.allChats.length > 0 || state is SocialGetAllUserSuccessState,
                   builder: (context) => ListView.separated(
                       physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, i) =>
@@ -46,19 +47,55 @@ class ChatsScreen extends StatelessWidget {
         padding: const EdgeInsets.all(20.0),
         child: Row(
           children: [
-            CircleAvatar(
-                radius: 25,
-                backgroundImage: NetworkImage(cubit.allChats[index].image!)),
+            Stack(
+              alignment: AlignmentDirectional.bottomEnd,
+              children: [
+                CircleAvatar(
+                    radius: 33,
+                    backgroundImage: NetworkImage(cubit.allChats[index].image!)),
+                if(cubit.allChats[index].isOnline!)
+                  const CircleAvatar(
+                    radius: 9,
+                    backgroundColor: Colors.white,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.green,
+                      radius: 7,
+                    ),
+                  ),
+              ],
+            ),
             const SizedBox(
               width: 15,
             ),
-            Text(
-              cubit.allChats[index].name!,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(fontWeight: FontWeight.bold),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    cubit.allChats[index].name!,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  // SizedBox(
+                  //   height: 3,
+                  // ),
+                   // Text(cubit.allLastMessage[index].message!,overflow: TextOverflow.ellipsis,)
+                ],
+              ),
             ),
+            // Column(
+            //   children: [
+            //     Text('7:30 Am'),
+            //     if(cubit.isSeenList[index] == false)
+            //     CircleAvatar(
+            //       radius: 15,
+            //       backgroundColor: Colors.lightBlueAccent,
+            //         child: Icon(IconBroken.Notification,size: 18,color: Colors.white,)
+            //     )
+            //   ],
+            // )
           ],
         ),
       ),

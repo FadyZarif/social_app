@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/models/user_model.dart';
 import 'package:social_app/modules/register/cubit/states.dart';
+import 'package:social_app/shared/components/constant.dart';
 
 class RegisterCubit extends Cubit<RegisterStates> {
   RegisterCubit() : super(RegisterInitialState());
@@ -43,6 +44,7 @@ class RegisterCubit extends Cubit<RegisterStates> {
     required String uId,
    }) {
     UserModel userModel = UserModel(
+      token: token,
       name: name,
       email: email,
       password: password,
@@ -51,7 +53,7 @@ class RegisterCubit extends Cubit<RegisterStates> {
       image: 'https://cdn-icons-png.flaticon.com/512/274/274133.png?w=740&t=st=1664670509~exp=1664671109~hmac=daa652327bae2d17c15f4c20059f769329bfd09f38ab127909c65c7f8893005e',
       cover: 'https://media.istockphoto.com/photos/delicious-meal-on-a-black-plate-top-view-copy-space-picture-id1165399909?k=20&m=1165399909&s=612x612&w=0&h=5g5C4BDoxaejlIr4r_8cV6jDYXzN8n1-JkIW3LgPUuA=',
       bio: 'write your bio ...',
-      isEmailVerified: false,
+      isOnline: true,
       photos: []
     );
 
