@@ -6,13 +6,13 @@ This is Social Media App built with Flutter and Firebase with bloc state managem
 1. Authentication & User Profile
 The app uses Firebase Authentication to allow users to create an account, log in. Users can log in using their email and password , Once logged in, users can view and edit their profile, including their name, profile picture, bio and add thier photos. They can also view their activity log and followers/following list.
 <p align="center">
-  <img width="525" height="295" src="assets/project_images/Create_profile.gif">
+  <img width="235" height="525" src="assets/project_images/Create_profile.gif">
 </p>
 
 2. Messaging
 Users can start a new conversation and they can also view their message history, Shows who you are talking to online or offline (If the application is open, they are online), If you are inside the application but not on the conversation page, a notification is sent inside the application from the top, and when you click on it, you are transferred to the conversation page in which the message was sentو If you are outside the application, a notification is displayed from the system interface.
 <p align="center">
-  <img width="933" height="525" src="assets/project_images/Chat.gif">
+  <img width="525" height="295" src="assets/project_images/Chat.gif">
 </p>
 
 3. Add and View Story
