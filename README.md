@@ -1,6 +1,6 @@
 # social app
 
-This is Social Media App built with Flutter and Firebase with bloc state management. The app provides users with a clean and intuitive UI/UX and offers end-to-end encryption chat, dynamic links, adding new posts or stories, and much more.
+This is Social Media App built with Flutter and Firebase with bloc state management. The app provides users with a clean and intuitive UI/UX and offers chat, dynamic links, adding new posts or stories, and much more.
 
 ## Features:
 1. Authentication & User Profile
