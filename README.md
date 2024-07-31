@@ -34,12 +34,12 @@ Can edit post'photo or description or delete it.
 </p>
 
 6. Show feeds and make like and comment
-View posts from friends and Engage with posts by commenting and liking content, You can enter any personal page of the post creator.
+View posts from friends and Engage with posts by commenting and liking content.
 <p align="center">
   <img width="235" height="525" src="assets/project_images/Engage.gif">
 </p>
 
-6. Search for user or post
+7. Search for user or post and You can enter any personal page of the post creator
 <p align="center">
   <img width="235" height="525" src="assets/project_images/Search.gif">
 </p>
