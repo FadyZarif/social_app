@@ -12,7 +12,7 @@ The app uses Firebase Authentication to allow users to create an account, log in
 2. Messaging
 Users can start a new conversation and they can also view their message history, Shows who you are talking to online or offline (If the application is open, they are online), If you are inside the application but not on the conversation page, a notification is sent inside the application from the top, and when you click on it, you are transferred to the conversation page in which the message was sentو If you are outside the application, a notification is displayed from the system interface.
 <p align="center">
-  <img width="1050" height="525" src="assets/project_images/Chat.gif">
+  <img width="1920" height="1080" src="assets/project_images/Chat.gif">
 </p>
 
 3. Add and View Story
