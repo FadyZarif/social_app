@@ -177,6 +177,8 @@ class SearchScreen extends StatelessWidget {
               onPressed: () {
                 navigateTo(
                     context, ChatDetailsScreen(receiverModel: userModel));
+                cubit.inChat = true;
+
               },
               icon: Icon(
                 IconBroken.Chat,
@@ -245,7 +247,7 @@ class SearchScreen extends StatelessWidget {
                     ),
                     Text(
                       '${DateFormat.yMMMMd().format(DateTime.parse(postModel.dateTime!))} at ${DateFormat.jm().format(DateTime.parse(postModel.dateTime!))}',
-                      style: Theme.of(context).textTheme.caption,
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ],
                 ),
@@ -308,7 +310,7 @@ class SearchScreen extends StatelessWidget {
                       ),
                       Text(
                         '${postModel.likes?.length.toString() ?? 0} likes',
-                        style: Theme.of(context).textTheme.caption,
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ],
                   ),
@@ -330,7 +332,7 @@ class SearchScreen extends StatelessWidget {
                       ),
                       Text(
                         '${postModel.comments?.length.toString() ?? 0} comments',
-                        style: Theme.of(context).textTheme.caption,
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ],
                   ),

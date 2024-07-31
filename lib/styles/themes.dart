@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 Color defColor = Colors.lightBlueAccent;
 
 ThemeData lightTheme = ThemeData(
   scaffoldBackgroundColor: Colors.white,
-  appBarTheme:  const AppBarTheme(
+  colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+  appBarTheme:   AppBarTheme(
       backgroundColor: Colors.white,
       elevation: 0,
       titleSpacing: 20,
-      backwardsCompatibility: false,
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark,
@@ -23,7 +22,7 @@ ThemeData lightTheme = ThemeData(
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       type: BottomNavigationBarType.fixed, elevation: 20),
   textTheme: const TextTheme(
-      headline1: TextStyle(
+      displayLarge: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w800,
           color: Colors.black)),
@@ -41,7 +40,6 @@ ThemeData darkTheme = ThemeData(
         backgroundColor: Color(0xff333739),
         elevation: 0,
         titleSpacing: 20,
-        backwardsCompatibility: false,
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: Color(0xff333739),
           statusBarIconBrightness: Brightness.light,
@@ -53,7 +51,7 @@ ThemeData darkTheme = ThemeData(
         iconTheme: IconThemeData(color: Colors.white)),
     scaffoldBackgroundColor: const Color(0xff333739),
     textTheme: const TextTheme(
-        headline1: TextStyle(
+        displayLarge: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Colors.white)));

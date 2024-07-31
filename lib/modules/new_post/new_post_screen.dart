@@ -15,7 +15,8 @@ class NewPostScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SocialCubit, SocialStates>(listener: (context, state) {
+    return BlocConsumer<SocialCubit, SocialStates>(
+        listener: (context, state) {
       if (state is SocialCreatePostSuccessState) {
         Navigator.pop(context);
         SocialCubit.get(context).postImage = null;
@@ -26,7 +27,7 @@ class NewPostScreen extends StatelessWidget {
         appBar: defAppBar(context: context, title: 'Create Post', actions: [
           TextButton(
               onPressed: () {
-                if(formKey.currentState!.validate()) {
+                if (formKey.currentState!.validate()) {
                   cubit.createNewPost(postText: postController.text);
                 }
               },
@@ -38,50 +39,47 @@ class NewPostScreen extends StatelessWidget {
             child: Column(
               children: [
                 if (state is SocialCreatePostLoadingState)
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10.0),
-                  child: LinearProgressIndicator(),
-                ),
-                  Row(
-                    children: [
-                       CircleAvatar(
-                        radius: 25,
-                        backgroundImage: NetworkImage(
-                            cubit.userModel!.image!),
-                      ),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                      Text(
-                        cubit.userModel!.name!,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium
-                            ?.copyWith(fontWeight: FontWeight.bold),
-                      ),
-                    ],
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10.0),
+                    child: LinearProgressIndicator(),
                   ),
+                Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 25,
+                      backgroundImage: NetworkImage(cubit.userModel!.image!),
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    Text(
+                      cubit.userModel!.name!,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
                 Container(
                   height: 160,
                   child: Form(
                     key: formKey,
                     child: TextFormField(
-                      controller: postController,
-                      maxLines: 7,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText:
-                            'what is on your mind, ${cubit.userModel?.name} ?',
-                      ),
-                      validator: (v){
-                        if(v!.isEmpty){
-                          return 'write post';
-                        }
-                        else {
-                          return null;
-                        }
-                      }
-                    ),
+                        controller: postController,
+                        maxLines: 7,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText:
+                              'what is on your mind, ${cubit.userModel?.name} ?',
+                        ),
+                        validator: (v) {
+                          if (v!.isEmpty) {
+                            return 'write post';
+                          } else {
+                            return null;
+                          }
+                        }),
                   ),
                 ),
               ],
@@ -97,18 +95,18 @@ class NewPostScreen extends StatelessWidget {
                 Stack(
                   alignment: AlignmentDirectional.topEnd,
                   children: [
-                    if(!kIsWeb)
-                    Card(
-                      clipBehavior: Clip.antiAlias,
-                      elevation: 5,
-                      child: Image(
-                        image: FileImage(cubit.postImage!),
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                        //height: 450,
+                    if (!kIsWeb)
+                      Card(
+                        clipBehavior: Clip.antiAlias,
+                        elevation: 5,
+                        child: Image(
+                          image: FileImage(cubit.postImage!),
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          //height: 450,
+                        ),
                       ),
-                    ),
-                    if(kIsWeb)
+                    if (kIsWeb)
                       Card(
                         clipBehavior: Clip.antiAlias,
                         elevation: 5,

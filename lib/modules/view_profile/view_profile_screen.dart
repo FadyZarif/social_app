@@ -72,7 +72,7 @@ class ViewProfileScreen extends StatelessWidget {
                     ),
                     Text(
                       model.bio!,
-                      style: Theme.of(context).textTheme.caption,
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20.0),
@@ -86,13 +86,13 @@ class ViewProfileScreen extends StatelessWidget {
                                 children: [
                                   Text(
                                     '100',
-                                    style: Theme.of(context).textTheme.subtitle2,
+                                    style: Theme.of(context).textTheme.titleSmall,
                                   ),
                                   const SizedBox(
                                     height: 10,
                                   ),
                                   Text('Posts',
-                                      style: Theme.of(context).textTheme.caption),
+                                      style: Theme.of(context).textTheme.bodySmall),
                                 ],
                               ),
                             ),
@@ -105,13 +105,13 @@ class ViewProfileScreen extends StatelessWidget {
                                 children: [
                                   Text(
                                     '265',
-                                    style: Theme.of(context).textTheme.subtitle2,
+                                    style: Theme.of(context).textTheme.titleSmall,
                                   ),
                                   const SizedBox(
                                     height: 10,
                                   ),
                                   Text('Photos',
-                                      style: Theme.of(context).textTheme.caption),
+                                      style: Theme.of(context).textTheme.bodySmall),
                                 ],
                               ),
                             ),
@@ -124,13 +124,13 @@ class ViewProfileScreen extends StatelessWidget {
                                 children: [
                                   Text(
                                     '10K',
-                                    style: Theme.of(context).textTheme.subtitle2,
+                                    style: Theme.of(context).textTheme.titleSmall,
                                   ),
                                   const SizedBox(
                                     height: 10,
                                   ),
                                   Text('Followers',
-                                      style: Theme.of(context).textTheme.caption),
+                                      style: Theme.of(context).textTheme.bodySmall),
                                 ],
                               ),
                             ),
@@ -143,13 +143,13 @@ class ViewProfileScreen extends StatelessWidget {
                                 children: [
                                   Text(
                                     '64',
-                                    style: Theme.of(context).textTheme.subtitle2,
+                                    style: Theme.of(context).textTheme.titleSmall,
                                   ),
                                   const SizedBox(
                                     height: 10,
                                   ),
                                   Text('Followings',
-                                      style: Theme.of(context).textTheme.caption),
+                                      style: Theme.of(context).textTheme.bodySmall),
                                 ],
                               ),
                             ),

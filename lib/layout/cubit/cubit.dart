@@ -1,3 +1,4 @@
+
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
@@ -29,6 +30,8 @@ class SocialCubit extends Cubit<SocialStates> {
   SocialCubit() : super(SocialInitState());
 
   static SocialCubit get(context) => BlocProvider.of(context);
+
+  bool inChat = false;
 
   UserModel? userModel;
 
@@ -542,7 +545,7 @@ class SocialCubit extends Cubit<SocialStates> {
         .doc(receiverModel.uId)
         .collection('chats')
         .doc(userModel?.uId)
-        .update({'isSeen': false}).then((value) {
+        .set({'isSeen': false}).then((value) {
       FirebaseFirestore.instance
           .collection('users')
           .doc(receiverModel.uId)
@@ -556,7 +559,7 @@ class SocialCubit extends Cubit<SocialStates> {
                 title: userModel?.name,
                 body: message,
                 image: userModel?.image
-            );
+            ).catchError((onError){print(onError);});
         emit(SocialSendMessageSuccessState());
       }).catchError((error) {
         print(error.toString());

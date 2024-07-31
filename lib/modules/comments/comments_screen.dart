@@ -29,7 +29,7 @@ class CommentsScreen extends StatelessWidget {
                   ),
                   Text(
                     '${cubit.posts[i].comments?.length.toString()??0} comments',
-                    style: Theme.of(context).textTheme.caption,
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ],
               ),

@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:motion_toast/motion_toast.dart';
 import 'package:social_app/layout/cubit/cubit.dart';
 import 'package:social_app/layout/cubit/states.dart';
 import 'package:social_app/modules/login/cubit/states.dart';
@@ -13,6 +15,9 @@ import 'package:social_app/network/remote/dio_helper.dart';
 import 'package:social_app/shared/components/constant.dart';
 import 'package:social_app/styles/icon_broken.dart';
 import 'package:timeago/timeago.dart' as timeago;
+
+import '../modules/chat_details/chat_details_screen.dart';
+import '../styles/themes.dart';
 
 class SocialLayout extends StatefulWidget  {
   const SocialLayout({Key? key}) : super(key: key);
@@ -43,6 +48,34 @@ class _SocialLayoutState extends State<SocialLayout> with WidgetsBindingObserver
   @override
   Widget build(BuildContext context) {
     SocialCubit cubit = SocialCubit.get(context);
+    FirebaseMessaging.onMessage.listen((event) {
+      if(!cubit.inChat) {
+        MotionToast(
+        icon:  Icons.chat,
+        primaryColor:  defColor.withOpacity(0.5),
+        title:  Text("${event.notification?.title}",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18),),
+        description:  InkWell(
+          onTap: (){
+            navigateTo(
+                context, ChatDetailsScreen(receiverModel: cubit.allUsers.firstWhere((user) => user.name == event.notification?.title)));
+            cubit.inChat = true;
+          },
+            child: Text("${event.notification?.body}",style: TextStyle(color: Colors.white70,),),
+
+        ),
+        width:  300,
+        height:  100,
+        // animationType: AnimationType.fromTop,
+        toastDuration: Duration(seconds: 6),
+        secondaryColor: Colors.white70,
+        position: MotionToastPosition.top,
+
+      ).show(context);
+      }
+      print(event.data.toString());
+      print(event.notification?.body);
+    });
+
     //cubit.getUserData();
 
     return BlocConsumer<SocialCubit, SocialStates>(
@@ -52,7 +85,7 @@ class _SocialLayoutState extends State<SocialLayout> with WidgetsBindingObserver
           }
         },
         builder: (context, state) {
-          SocialCubit cubit = SocialCubit.get(context);
+          // SocialCubit cubit = SocialCubit.get(context);
           return ConditionalBuilder(
             condition: cubit.userModel != null ,
             builder: (context) {

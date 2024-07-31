@@ -94,20 +94,20 @@ PreferredSizeWidget defAppBar({
 
 }
 
-defToast(
-    {required String msg,
-      Toast? toastLength,
-      ToastGravity? gravity,
-      int timeInSecForIosWeb = 5,
-      Color backgroundColor = Colors.lightBlueAccent,
-      Color textColor = Colors.white,
-      double fontSize = 16}) {
-  Fluttertoast.showToast(
-      msg: msg,
-      toastLength: toastLength,
-      gravity: gravity,
-      timeInSecForIosWeb: timeInSecForIosWeb,
-      backgroundColor: backgroundColor,
-      textColor: textColor,
-      fontSize: fontSize);
-}
+  defToast(
+      {required String msg,
+        Toast? toastLength,
+        ToastGravity? gravity,
+        int timeInSecForIosWeb = 5,
+        Color backgroundColor = Colors.lightBlueAccent,
+        Color textColor = Colors.white,
+        double fontSize = 16}) {
+    Fluttertoast.showToast(
+        msg: msg,
+        toastLength: toastLength,
+        gravity: gravity,
+        timeInSecForIosWeb: timeInSecForIosWeb,
+        backgroundColor: backgroundColor,
+        textColor: textColor,
+        fontSize: fontSize);
+  }

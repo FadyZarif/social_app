@@ -28,8 +28,8 @@ class ViewStory extends StatelessWidget {
               toolbarHeight: 30,
             ),
             body: StoryView(
-              userImage: story['user'].image,
-              userName: story['user'].name,
+              //userImage: story['user'].image,
+              //userName: story['user'].name,
               onVerticalSwipeComplete: (d) {
                 print(d);
                 print('object');
@@ -76,22 +76,23 @@ class ViewStory extends StatelessWidget {
                   List.generate(story['story'].length, (i) {
                 return story['story'][i].url != null
                     ? StoryItem.pageImage(
-                        timaAgo: timeago.format(
-                            DateTime.parse(story['story'][i].startTime),
-                            locale: 'en'),
+                        // timaAgo: timeago.format(
+                        //     DateTime.parse(story['story'][i].startTime),
+                        //     locale: 'en'),
                         url: story['story'][i].url,
-                        caption: story['story'][i].caption,
+                        caption: Text(story['story'][i].caption),
                         controller: storyController,
                       )
                     : StoryItem.text(
-                        timaAgo: timeago.format(
-                            DateTime.parse(story['story'][i].startTime),
-                            locale: 'en'),
+                        // timaAgo: timeago.format(
+                        //     DateTime.parse(story['story'][i].startTime),
+                        //     locale: 'en'),
                         title: story['story'][i].caption,
                         backgroundColor: Colors.lightBlueAccent,
                       );
               }),
-              onStoryShow: (s) {
+
+              onStoryShow: (s,i) {
                 print("Showing a story");
               },
               onComplete: () {

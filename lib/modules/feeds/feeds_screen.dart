@@ -215,7 +215,7 @@ class FeedsScreen extends StatelessWidget {
                     ),
                     Text(
                       '${DateFormat.yMMMMd().format(DateTime.parse(model.dateTime!))} at ${DateFormat.jm().format(DateTime.parse(model.dateTime!))}',
-                      style: Theme.of(context).textTheme.caption,
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ],
                 ),
@@ -286,7 +286,7 @@ class FeedsScreen extends StatelessWidget {
                       ),
                       Text(
                         '${model.likes?.length.toString() ?? 0} likes',
-                        style: Theme.of(context).textTheme.caption,
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ],
                   ),
@@ -310,7 +310,7 @@ class FeedsScreen extends StatelessWidget {
                       ),
                       Text(
                         '${model.comments?.length.toString() ?? 0} comments',
-                        style: Theme.of(context).textTheme.caption,
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ],
                   ),
@@ -384,7 +384,7 @@ class FeedsScreen extends StatelessWidget {
                           Text(
                             'Like',
                             style:
-                                Theme.of(context).textTheme.caption?.copyWith(
+                                Theme.of(context).textTheme.bodySmall?.copyWith(
                                       color: cubit.isLiked[i]
                                           ? Colors.red
                                           : Colors.grey,

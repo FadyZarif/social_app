@@ -17,25 +17,23 @@ import 'package:social_app/shared/components/components.dart';
 import 'package:social_app/shared/components/constant.dart';
 import 'package:social_app/styles/themes.dart';
 
+import 'firebase_options.dart';
+
 bool? isLogin;
 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  kIsWeb ?  await Firebase.initializeApp(
-      options: const FirebaseOptions(
-          apiKey: "AIzaSyD-tMH_03N9pDMzCyFOJ4e_jLFz8OlQ8OU",
-          appId: "1:858566566430:web:527b7fd0accc8efa2a840f",
-          messagingSenderId: "858566566430",
-          projectId: "social-app-9faab",
-          storageBucket: "social-app-9faab.appspot.com")) : await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
    token = await FirebaseMessaging.instance.getToken();
 
-  await FirebaseMessaging.onMessage.listen((event) {
-    print(event.data.toString());
-    defToast(msg: 'onMessage');
-
-  });
+  // await FirebaseMessaging.onMessage.listen((event) {
+  //   print(event.data.toString());
+  //   defToast(msg: 'onMessage');
+  //
+  // });
 
   await FirebaseMessaging.onMessageOpenedApp.listen((event) {
     print(event.data.toString());

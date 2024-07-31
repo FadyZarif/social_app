@@ -72,6 +72,8 @@ class UsersScreen extends StatelessWidget {
             ),
             IconButton(onPressed: (){
               navigateTo(context, ChatDetailsScreen(receiverModel: cubit.allUsers[index]));
+              cubit.inChat = true;
+
             }, icon: Icon(IconBroken.Chat,color: defColor,))
           ],
         ),

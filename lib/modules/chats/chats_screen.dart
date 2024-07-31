@@ -42,6 +42,8 @@ class ChatsScreen extends StatelessWidget {
             ChatDetailsScreen(
               receiverModel: cubit.allChats[index],
             ));
+        cubit.inChat = true;
+
       },
       child: Padding(
         padding: const EdgeInsets.all(20.0),

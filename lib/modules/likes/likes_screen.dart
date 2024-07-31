@@ -32,7 +32,7 @@ class LikesScreen extends StatelessWidget {
                 ),
                 Text(
                   cubit.posts[i].likes?.length.toString() ?? '0',
-                  style: Theme.of(context).textTheme.caption,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
               ],
             ),
