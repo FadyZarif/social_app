@@ -2,6 +2,7 @@
 
 This is Social Media App built with Flutter and Firebase with bloc state management. The app provides users with a clean and intuitive UI/UX and offers chat, dynamic links, adding new posts or stories, and much more.
 To download this app, follow this link: [social app](https://www.dropbox.com/scl/fi/10d82yu908r0gbbv2c626/social-app.apk?rlkey=ibqyxnbx5aqzbxk4cxmwrpowz&st=q0dmzbs9&dl=0)
+and you can view app as website only for preview https://social-app.fady-zarif.com/
 
 ## Features:
 1. Authentication & User Profile
